@@ -1,0 +1,102 @@
+{
+  "info": {
+    "name": "User Management API",
+    "description": "Collection for testing User Management API endpoints",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "GET All Users",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:7001/api/users",
+          "protocol": "https",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "users"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET User by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:7001/api/users/1",
+          "protocol": "https",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "users", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST Create User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@techhive.com\",\n  \"department\": \"Human Resources\",\n  \"position\": \"HR Manager\"\n}"
+        },
+        "url": {
+          "raw": "https://localhost:7001/api/users",
+          "protocol": "https",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "users"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PUT Update User",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Smith\",\n  \"email\": \"john.smith@techhive.com\",\n  \"department\": \"Information Technology\",\n  \"position\": \"Senior IT Manager\"\n}"
+        },
+        "url": {
+          "raw": "https://localhost:7001/api/users/1",
+          "protocol": "https",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "users", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE User",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:7001/api/users/1",
+          "protocol": "https",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "users", "1"]
+        }
+      },
+      "response": []
+    }
+  ]
+}

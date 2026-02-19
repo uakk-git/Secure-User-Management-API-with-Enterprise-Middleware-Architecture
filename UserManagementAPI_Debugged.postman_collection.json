@@ -1,0 +1,323 @@
+{
+  "info": {
+    "name": "User Management API - Debugged Version",
+    "description": "Collection for testing User Management API with edge cases and validation",
+    "version": "2.0.0"
+  },
+  "item": [
+    {
+      "name": "1. GET All Users (Valid)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:7001/api/users?pageNumber=1&pageSize=50",
+          "protocol": "https",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "users"],
+          "query": [
+            {"key": "pageNumber", "value": "1"},
+            {"key": "pageSize", "value": "50"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "2. GET All Users (Invalid Page - Should Return 400)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:7001/api/users?pageNumber=0&pageSize=50",
+          "protocol": "https",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "users"],
+          "query": [
+            {"key": "pageNumber", "value": "0"},
+            {"key": "pageSize", "value": "50"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "3. GET All Users (Page Size Exceeds Max - Should Be Clamped)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:7001/api/users?pageNumber=1&pageSize=150",
+          "protocol": "https",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "users"],
+          "query": [
+            {"key": "pageNumber", "value": "1"},
+            {"key": "pageSize", "value": "150"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "4. POST Create User (Valid)",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@techhive.com\",\n  \"department\": \"Human Resources\",\n  \"position\": \"HR Manager\"\n}"
+        },
+        "url": {
+          "raw": "https://localhost:7001/api/users",
+          "protocol": "https",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "users"]
+        }
+      }
+    },
+    {
+      "name": "5. POST Create User (Missing Email - Should Return 400)",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Smith\",\n  \"email\": \"\",\n  \"department\": \"IT\",\n  \"position\": \"Developer\"\n}"
+        },
+        "url": {
+          "raw": "https://localhost:7001/api/users",
+          "protocol": "https",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "users"]
+        }
+      }
+    },
+    {
+      "name": "6. POST Create User (Invalid Email Format - Should Return 400)",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Smith\",\n  \"email\": \"notanemail\",\n  \"department\": \"IT\",\n  \"position\": \"Developer\"\n}"
+        },
+        "url": {
+          "raw": "https://localhost:7001/api/users",
+          "protocol": "https",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "users"]
+        }
+      }
+    },
+    {
+      "name": "7. POST Create User (Duplicate Email - Should Return 409)",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Duplicate\",\n  \"email\": \"john.doe@techhive.com\",\n  \"department\": \"HR\",\n  \"position\": \"Manager\"\n}"
+        },
+        "url": {
+          "raw": "https://localhost:7001/api/users",
+          "protocol": "https",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "users"]
+        }
+      }
+    },
+    {
+      "name": "8. POST Create User (Short First Name - Should Return 400)",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"J\",\n  \"lastName\": \"Doe\",\n  \"email\": \"j.doe@techhive.com\",\n  \"department\": \"IT\",\n  \"position\": \"Developer\"\n}"
+        },
+        "url": {
+          "raw": "https://localhost:7001/api/users",
+          "protocol": "https",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "users"]
+        }
+      }
+    },
+    {
+      "name": "9. GET User by ID (Valid ID)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:7001/api/users/1",
+          "protocol": "https",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "users", "1"]
+        }
+      }
+    },
+    {
+      "name": "10. GET User by ID (Non-existent ID - Should Return 404)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:7001/api/users/999",
+          "protocol": "https",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "users", "999"]
+        }
+      }
+    },
+    {
+      "name": "11. GET User by ID (Invalid ID - Should Return 400)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:7001/api/users/0",
+          "protocol": "https",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "users", "0"]
+        }
+      }
+    },
+    {
+      "name": "12. GET User by ID (Negative ID - Should Return 400)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:7001/api/users/-5",
+          "protocol": "https",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "users", "-5"]
+        }
+      }
+    },
+    {
+      "name": "13. PUT Update User (Valid)",
+      "request": {
+        "method": "PUT",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Smith\",\n  \"email\": \"john.smith@techhive.com\",\n  \"department\": \"Information Technology\",\n  \"position\": \"Senior Manager\"\n}"
+        },
+        "url": {
+          "raw": "https://localhost:7001/api/users/1",
+          "protocol": "https",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "users", "1"]
+        }
+      }
+    },
+    {
+      "name": "14. PUT Update User (Non-existent ID - Should Return 404)",
+      "request": {
+        "method": "PUT",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Unknown\",\n  \"email\": \"jane@techhive.com\",\n  \"department\": \"HR\",\n  \"position\": \"Recruiter\"\n}"
+        },
+        "url": {
+          "raw": "https://localhost:7001/api/users/999",
+          "protocol": "https",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "users", "999"]
+        }
+      }
+    },
+    {
+      "name": "15. PUT Update User (Duplicate Email - Should Return 409)",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Alice\",\n  \"lastName\": \"Brown\",\n  \"email\": \"alice@techhive.com\",\n  \"department\": \"Finance\",\n  \"position\": \"Accountant\"\n}"
+        },
+        "url": {
+          "raw": "https://localhost:7001/api/users",
+          "protocol": "https",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "users"]
+        }
+      }
+    },
+    {
+      "name": "16. PUT Update User to Existing Email (Should Return 409)",
+      "request": {
+        "method": "PUT",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Updated\",\n  \"email\": \"alice@techhive.com\",\n  \"department\": \"IT\",\n  \"position\": \"Developer\"\n}"
+        },
+        "url": {
+          "raw": "https://localhost:7001/api/users/1",
+          "protocol": "https",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "users", "1"]
+        }
+      }
+    },
+    {
+      "name": "17. DELETE User (Valid)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:7001/api/users/1",
+          "protocol": "https",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "users", "1"]
+        }
+      }
+    },
+    {
+      "name": "18. DELETE User (Non-existent ID - Should Return 404)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:7001/api/users/999",
+          "protocol": "https",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "users", "999"]
+        }
+      }
+    },
+    {
+      "name": "19. DELETE User (Invalid ID - Should Return 400)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:7001/api/users/0",
+          "protocol": "https",
+          "host": ["localhost"],
+          "port": "7001",
+          "path": ["api", "users", "0"]
+        }
+      }
+    }
+  ]
+}
